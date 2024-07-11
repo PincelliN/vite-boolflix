@@ -29,18 +29,37 @@ export default {
         .catch(err => {
           console.log(err);
         })
+    },
+
+    getVideo() {
+      for (let index = 0; index < store.type.length; index++) {
+        const element = store.type[index];
+        let url = store.listApi + element + store.key + store.filterApi
+        axios.
+          get(url)
+          .then(res => {
+            console.log(res.data.results);
+            if (element == "movie") {
+              store.movieList = res.data.results;
+            } else {
+              store.tvList = res.data.results
+            }
+
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
+
     }
   },
-  created() {
-    this.getMovies()
 
-  }
 }
 
 </script>
 
 <template>
-  <Appheader @search="getMovies" />
+  <Appheader @search="getVideo" />
   <AppMain />
 </template>
 

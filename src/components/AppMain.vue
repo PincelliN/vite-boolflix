@@ -1,6 +1,7 @@
 <script>
 import { store } from "../store";
 import AppCard from "./AppCard.vue";
+
 export default {
     name: "AppMain",
     components: {
@@ -19,7 +20,10 @@ export default {
     </main>
     <main v-else>
         <section>
-            <AppCard v-for="(movie, i) in store.movieList" :key="i" :info="movie" />
+            <AppCard v-for="(movie, i) in store.movieList" :info="movie" />
+        </section>
+        <section>
+            <AppCard v-for="tv in store.tvList " :info="tv" />
         </section>
     </main>
 </template>

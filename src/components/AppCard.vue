@@ -7,6 +7,7 @@ export default {
     data() {
         return {
             store,
+            show: true,
         }
     },
     methods: {
@@ -31,21 +32,17 @@ export default {
 </script>
 <template>
 
-    <div class="info">
-        <h5>Titolo:{{ info.
-            title }}</h5>
-        <h5>Titolo originale:{{ info.
-            original_title
-            }}</h5>
-        <span>Voto:{{
-            info.vote_average
-        }}</span><br>
+    <div class="info" @mouseleave="show = true" v-show="show == false">
+        <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
+        <h5>Titolo originale:{{ info.original_title ? info.original_title : info.
+            original_name }}</h5>
+        <span>Voto:{{ info.vote_average }}</span><br>
         <span :class="`fi fi-${flagLanguages()}
             `"></span>
 
 
     </div>
-    <div class="poster">
+    <div class="poster" @mouseover="show = false" v-show="show == true">
         <img :src="'https://image.tmdb.org/t/p/w200/' + info.poster_path" alt="">
     </div>
 </template>
@@ -65,7 +62,7 @@ export default {
     width: calc((100% / 4) - 20px);
     height: 200px;
 
-    display: none;
+
 
     img {
         width: 100%;
