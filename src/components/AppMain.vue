@@ -20,7 +20,7 @@ export default {
     </main>
     <main v-else>
         <section>
-            <AppCard v-for="(movie, i) in store.movieList" :info="movie" />
+            <AppCard v-for="movie in store.movieList" :info="movie" />
         </section>
         <section>
             <AppCard v-for="tv in store.tvList " :info="tv" />
