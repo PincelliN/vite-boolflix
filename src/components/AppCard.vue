@@ -1,4 +1,5 @@
 <script>
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { store } from "../store"
 export default {
     name: "AppCard",
@@ -8,6 +9,23 @@ export default {
             store,
         }
     },
+    methods: {
+        flagLanguages() {
+            let country = this.info.original_language;
+            if (country == "en") {
+                country = "us"
+            }
+            if (country == "ja") {
+                country = "jp"
+            }
+            if (country == "te") {
+                country = "de"
+            }
+
+            return country
+        }
+    }
+
 
 }
 </script>
@@ -21,10 +39,10 @@ export default {
             }}</h5>
         <span>Voto:{{
             info.vote_average
-            }}</span>
-        <p>Lingua:{{ info.
-            original_language
-            }}</p>
+        }}</span><br>
+        <span :class="`fi fi-${flagLanguages()}
+            `"></span>
+
 
     </div>
     <div class="poster">
