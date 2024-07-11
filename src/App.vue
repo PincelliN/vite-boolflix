@@ -2,11 +2,13 @@
 import axios from "axios";
 import Appheader from './components/Appheader.vue';
 import { store } from './store';
+import AppMain from './components/AppMain.vue';
 
 export default {
   name: "App",
   components: {
-    Appheader
+    Appheader,
+    AppMain
   },
   data() {
     return {
@@ -22,19 +24,24 @@ export default {
         .then(res => {
           console.log(res.data.results);
           store.movieList = res.data.results;
+          console.log(store.movieList);
         })
         .catch(err => {
           console.log(err);
         })
     }
   },
+  created() {
+    this.getMovies()
+
+  }
 }
 
 </script>
 
 <template>
   <Appheader @search="getMovies" />
-
+  <AppMain />
 </template>
 
 <style lang="scss">
