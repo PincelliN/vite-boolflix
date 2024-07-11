@@ -13,30 +13,50 @@ export default {
 </script>
 <template>
 
-    <div>
-        <h3>Titolo:{{ info.
-            title }}</h3>
-        <h3>Titolo originale:{{ info.
+    <div class="info">
+        <h5>Titolo:{{ info.
+            title }}</h5>
+        <h5>Titolo originale:{{ info.
             original_title
-            }}</h3>
+            }}</h5>
         <span>Voto:{{
             info.vote_average
         }}</span>
-        <p>Trama:{{ info.overview
+        <p>Lingua:{{ info.
+            original_language
             }}</p>
 
-
+    </div>
+    <div class="poster">
+        <img :src="'https://image.tmdb.org/t/p/w200/' + info.poster_path" alt="">
     </div>
 </template>
 
 <style lang="scss" scoped>
-div {
+.info {
     margin: 10px;
     width: calc((100% / 4) - 20px);
     color: white;
     height: 200px;
     overflow-y: scroll;
 
-    p {}
+}
+
+.poster {
+    margin: 10px;
+    width: calc((100% / 4) - 20px);
+    height: 200px;
+
+    display: none;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.none {
+    display: none;
 }
 </style>

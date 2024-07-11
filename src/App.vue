@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getMovies() {
-      let MovieApi = store.movielistApi + store.filterApi + "&num=20&offset=0";
+      let MovieApi = store.movielistApi + store.filterApi + "&num=10&offset=0";
       console.log(MovieApi);
       axios.
         get(MovieApi)
