@@ -13,7 +13,7 @@ export default {
 <template>
   <header>
     <div>
-      <h1>Boolflix</h1>
+      <h1>Boolflix</i></h1>
     </div>
     <div>
       <input type="text" placeholder="Cerca un film" v-model="store.filterApi">

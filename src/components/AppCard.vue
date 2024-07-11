@@ -24,6 +24,10 @@ export default {
             }
 
             return country
+        },
+        vote() {
+            const voteStar = Math.ceil(Math.ceil(parseInt(this.info.vote_average)) / 2);
+            return voteStar;
         }
     }
 
@@ -36,14 +40,18 @@ export default {
         <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
         <h5>Titolo originale:{{ info.original_title ? info.original_title : info.
             original_name }}</h5>
-        <span>Voto:{{ info.vote_average }}</span><br>
+
+        <span>
+            <i v-for="n in vote()" class="fa-solid fa-star"></i>
+            <i v-for="n in (5 - vote())" class="fa-regular fa-star"></i>
+        </span><br>
         <span :class="`fi fi-${flagLanguages()}
             `"></span>
 
 
     </div>
     <div class="poster" @mouseover="show = false" v-show="show == true">
-        <img :src="'https://image.tmdb.org/t/p/w200/' + info.poster_path" alt="">
+        <img :src="'https://image.tmdb.org/t/p/w342/' + info.poster_path" alt="">
     </div>
 </template>
 
