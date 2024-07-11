@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 import Appheader from './components/Appheader.vue';
-import { store } from "./store";
+import { store } from './store';
 
 export default {
   name: "App",
