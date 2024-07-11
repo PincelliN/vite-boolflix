@@ -1,6 +1,7 @@
 <script>
+import axios from "axios";
 import Appheader from './components/Appheader.vue';
-import { store } from './store.js';
+import { store } from "./store";
 
 export default {
   name: "App",
@@ -10,6 +11,10 @@ export default {
   data() {
     return {
       store,
+    }
+  },
+  methods: {
+    getMovies() {
     }
   }
 }
@@ -23,5 +28,5 @@ export default {
 </template>
 
 <style lang="scss">
-@use '/src/styles/general.scss'
+@use './styles/general.scss'
 </style>
