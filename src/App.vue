@@ -15,16 +15,26 @@ export default {
   },
   methods: {
     getMovies() {
+      let MovieApi = store.movielistApi + store.filterApi + "&num=20&offset=0";
+      console.log(MovieApi);
+      axios.
+        get(MovieApi)
+        .then(res => {
+          console.log(res.data.results);
+          store.movieList = res.data.results;
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
-  }
+  },
 }
 
 </script>
 
 <template>
-  <div class="container">
-    <Appheader />
-  </div>
+  <Appheader @search="getMovies" />
+
 </template>
 
 <style lang="scss">
