@@ -21,7 +21,7 @@ export default {
             }}</h5>
         <span>Voto:{{
             info.vote_average
-        }}</span>
+            }}</span>
         <p>Lingua:{{ info.
             original_language
             }}</p>
