@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getMovies() {
-      let MovieApi = store.movielistApi + store.filterApi + "&num=10&offset=0";
+      let MovieApi = store.movielistApi + store.filterApi;
       console.log(MovieApi);
       axios.
         get(MovieApi)
@@ -38,7 +38,7 @@ export default {
         axios.
           get(url)
           .then(res => {
-            console.log(res.data.results);
+            console.log(res.data);
             if (element == "movie") {
               store.movieList = res.data.results;
             } else {
@@ -52,7 +52,7 @@ export default {
       }
 
     }
-  },
+  }
 
 }
 

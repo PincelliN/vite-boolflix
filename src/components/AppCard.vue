@@ -1,6 +1,8 @@
 <script>
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { store } from "../store"
+import { info } from "sass";
+import axios from "axios";
 export default {
     name: "AppCard",
     props: ['info'],
@@ -24,10 +26,22 @@ export default {
 
             return country
         },
+        getcredi() {
+            let creditUrl = `https://api.themoviedb.org/3/movie/${this.info.id}/credits?${this.store.key}`
+            console.log(creditUrl);
+            axios.
+                get(creditUrl)
+                .then(res => {
+                    let cast = 
+            })
+        },
         vote() {
             const voteStar = Math.ceil(Math.ceil(parseInt(this.info.vote_average)) / 2);
             return voteStar;
         }
+    },
+    created() {
+        this.getcredi()
     }
 
 
