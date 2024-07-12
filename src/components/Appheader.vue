@@ -15,7 +15,7 @@ export default {
     <div class="row">
       <div class="col-12 ">
         <nav class="navbar navbar-light bg-dark justify-content-between px-5">
-          <a class="navbar-brand text-light text-uppercase">Boolflix</a>
+          <h1 class="navbar-brand text-danger text-uppercase">Boolflix</h1>
           <form class="d-flex">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
               v-model="store.filterApi">

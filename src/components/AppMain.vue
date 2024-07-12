@@ -19,19 +19,15 @@ export default {
         <h4> Inizia a cercare i film e le tue serie preferite</h4>
     </main>
     <main v-else>
+        <h2>Film</h2>
         <section>
-            <h2>Film</h2>
             <AppCard v-for="movie in store.movieList" :info="movie" />
         </section>
-        <div class="row">
-            <div class="col-12">
-                <h2>Serie tv</h2>
-                <section>
+        <h2>Serie tv</h2>
+        <section>
+            <AppCard v-for="tv in store.tvList " :info="tv" />
+        </section>
 
-                    <AppCard v-for="tv in store.tvList " :info="tv" />
-                </section>
-            </div>
-        </div>
     </main>
 </template>
 
@@ -40,14 +36,43 @@ main {
     background-color: black;
     padding: 20px;
 
+    h2 {
+        width: 80%;
+        margin: 0 auto;
+        color: white;
+    }
+
     section {
         width: 80%;
         margin: 0 auto;
-        border: 1px solid white;
+
         display: flex;
         justify-items: center;
-        flex-wrap: wrap;
         align-content: flex-start;
+
+        overflow-x: scroll;
+        overflow-y: hidden;
+
+        &::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #b30000;
+        }
     }
 }
 
