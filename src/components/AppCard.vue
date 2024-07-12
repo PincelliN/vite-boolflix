@@ -111,5 +111,30 @@ export default {
     background-color: black;
     color: white;
     transform: rotateY(180deg);
+    overflow-y: auto;
+    border: 1px solid white;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: red;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #b30000;
+    }
+
 }
 </style>

@@ -19,7 +19,7 @@ export default {
           <form class="d-flex">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
               v-model="store.filterApi">
-            <button class="btn btn-outline-light my-2 my-sm-0 mx-sm-1" type="submit"
+            <button class="btn btn-outline-danger my-2 my-sm-0 mx-sm-1" type="submit"
               @click.prevent="$emit('search')">Cerca</button>
           </form>
         </nav>
