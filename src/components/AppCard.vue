@@ -37,12 +37,14 @@ export default {
     <div class="flip-card">
         <div class="flip-card-inner">
             <div class="flip-card-front">
-                <img :src="'https://image.tmdb.org/t/p/w342/' + info.poster_path" alt="Avatar"
-                    style="width:100%;height:100%">
+                <img v-if="(info.poster_path != null)" :src="'https://image.tmdb.org/t/p/w342/' + info.poster_path"
+                    alt="Avatar" style="width:100%;height:100%">
+                <img v-else src="../assets/NO-IMAGE-it.jpg" alt="Avatar" style="width:100%;height:100%">
             </div>
-            <div class="flip-card-back" style="overflow-y: auto;">
+            <div class="flip-card-back p-2" style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
                 <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
-                <h5>Titolo originale:{{ info.original_title ? info.original_title : info.original_name }}</h5>
+                <h5 v-show="(info.title != info.original_title || info.name != info.original_name)">Titolo originale:{{
+                    info.original_title ? info.original_title : info.original_name }}</h5>
                 <span>
                     <i v-for="n in vote()" class="fa-solid fa-star"></i>
                     <i v-for="n in (5 - vote())" class="fa-regular fa-star"></i>
@@ -61,6 +63,9 @@ export default {
 <style lang="scss" scoped>
 @use '/src/styles/general.scss';
 
+.fa-solid {
+    color: yellow;
+}
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
