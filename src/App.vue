@@ -59,8 +59,11 @@ export default {
 </script>
 
 <template>
-  <Appheader @search="getVideo" />
-  <AppMain />
+  <div class="container-fluid">
+    <Appheader @search="getVideo" />
+    <AppMain />
+  </div>
+
 </template>
 
 <style lang="scss">

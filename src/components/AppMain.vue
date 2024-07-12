@@ -20,11 +20,18 @@ export default {
     </main>
     <main v-else>
         <section>
+            <h2>Film</h2>
             <AppCard v-for="movie in store.movieList" :info="movie" />
         </section>
-        <section>
-            <AppCard v-for="tv in store.tvList " :info="tv" />
-        </section>
+        <div class="row">
+            <div class="col-12">
+                <h2>Serie tv</h2>
+                <section>
+
+                    <AppCard v-for="tv in store.tvList " :info="tv" />
+                </section>
+            </div>
+        </div>
     </main>
 </template>
 
