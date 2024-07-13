@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             store,
+
         }
     },
     methods: {
@@ -26,25 +27,35 @@ export default {
 
             return country
         },
-        /* getcredi() {
-             let creditUrl = `https://api.themoviedb.org/3/movie/${this.info.id}/credits?${this.store.key}`
-             console.log(creditUrl);
-             axios.
-                 get(creditUrl)
-                 .then(res => {
-                     let cast = 
-             })
-         }, */
         vote() {
             const voteStar = Math.ceil(Math.ceil(parseInt(this.info.vote_average)) / 2);
             return voteStar;
+        },
+        getcredi() {
+            store.castList = []
+            let creditUrl = `https://api.themoviedb.org/3/${store.creditValue}/${this.info.id}/credits?api_key=12c083f747a1bca75436acb77dccc08d`
+            console.log(creditUrl);
+            axios.
+                get(creditUrl)
+                .then(res => {
+
+                    const cast = res.data.cast;
+                    console.log(cast);
+                    if (cast != []) {
+                        if (cast.length > 5) {
+                            store.castList = cast.slice(0, 5);
+
+                        } else {
+                            store.castList = cast.slice(0, cast.length);
+                        }
+                    }
+
+                }).catch(err => {
+                    /*  console.log("errore" + err); */
+                })
         }
+
     },
-    /*   created() {
-          this.getcredi()
-      } */
-
-
 }
 </script>
 <template>
@@ -55,7 +66,8 @@ export default {
                     alt="Avatar" style="width:100%;height:100%">
                 <img v-else src="../assets/NO-IMAGE-it.jpg" alt="Avatar" style="width:100%;height:100%">
             </div>
-            <div class="flip-card-back p-2" style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
+            <div @mouseover="info.title ? store.creditValue = 'movie' : store.creditValue = 'tv'"
+                class="flip-card-back p-2" style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
                 <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
                 <h5 v-show="(info.title != info.original_title || info.name != info.original_name)">Titolo originale:{{
                     info.original_title ? info.original_title : info.original_name }}</h5>
@@ -65,6 +77,11 @@ export default {
                 </span>
                 <br>
                 <span :class="`fi fi-${flagLanguages()}`"></span>
+                <p @click="this.getcredi()">Cast:
+                <ul>
+                    <li v-for="cast in store.castList">{{ cast.name }}</li>
+                </ul>
+                </p>
 
             </div>
         </div>

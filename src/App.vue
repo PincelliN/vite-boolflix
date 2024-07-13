@@ -18,22 +18,20 @@ export default {
   methods: {
     getMovies() {
       let MovieApi = store.movielistApi + store.filterApi;
-      console.log(MovieApi);
+      /*       console.log(MovieApi); */
       axios.
         get(MovieApi)
         .then(res => {
-          console.log(res.data.results);
+          /*   console.log(res.data.results); */
           store.movieList = res.data.results;
-          console.log(store.movieList);
+          /*    console.log(store.movieList); */
         })
         .catch(err => {
-          console.log(err);
+          /*  console.log(err); */
         })
     },
 
     getVideo() {
-      store.movieList = [];
-      store.tvList = [];
 
       for (let index = 0; index < store.type.length; index++) {
         const element = store.type[index];
@@ -57,7 +55,7 @@ export default {
 
           })
           .catch(err => {
-            console.log(err);
+            /* console.log(err); */
           })
       }
 

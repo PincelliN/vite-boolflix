@@ -10,7 +10,8 @@ export const store = reactive({
   type: ["tv", "movie"],
   movieList: [],
   tvList: [],
-  creditList: [],
+  creditValue: null,
+  castList: [],
   filterApi: "",
   displayInfo: null,
 });
