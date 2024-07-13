@@ -32,9 +32,19 @@ export default {
     },
 
     getVideo() {
+      store.movieList = [];
+      store.tvList = [];
+
       for (let index = 0; index < store.type.length; index++) {
         const element = store.type[index];
-        let url = store.listApi + element + store.key + store.filterApi
+
+        let url
+        if (store.filterApi == "") {
+          url = "https://api.themoviedb.org/3/" + element + "/top_rated?api_key=12c083f747a1bca75436acb77dccc08d";
+        } else {
+          url = store.listApi + element + store.key + store.filterApi;
+        }
+
         axios.
           get(url)
           .then(res => {
@@ -52,6 +62,9 @@ export default {
       }
 
     }
+  },
+  created() {
+    this.getVideo();
   }
 
 }

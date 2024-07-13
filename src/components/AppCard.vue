@@ -26,23 +26,23 @@ export default {
 
             return country
         },
-        getcredi() {
-            let creditUrl = `https://api.themoviedb.org/3/movie/${this.info.id}/credits?${this.store.key}`
-            console.log(creditUrl);
-            axios.
-                get(creditUrl)
-                .then(res => {
-                    let cast = 
-            })
-        },
+        /* getcredi() {
+             let creditUrl = `https://api.themoviedb.org/3/movie/${this.info.id}/credits?${this.store.key}`
+             console.log(creditUrl);
+             axios.
+                 get(creditUrl)
+                 .then(res => {
+                     let cast = 
+             })
+         }, */
         vote() {
             const voteStar = Math.ceil(Math.ceil(parseInt(this.info.vote_average)) / 2);
             return voteStar;
         }
     },
-    created() {
-        this.getcredi()
-    }
+    /*   created() {
+          this.getcredi()
+      } */
 
 
 }

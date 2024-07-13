@@ -7,7 +7,7 @@ export const store = reactive({
     "https://api.themoviedb.org/3/genre/movie/list?api_key=12c083f747a1bca75436acb77dccc08d",
   creditApi:
     "https://api.themoviedb.org/3/movie/ id film/credits?api_key=12c083f747a1bca75436acb77dccc08d",
-  type: ["movie", "tv"],
+  type: ["tv", "movie"],
   movieList: [],
   tvList: [],
   creditList: [],

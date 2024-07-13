@@ -19,11 +19,14 @@ export default {
         <h4> Inizia a cercare i film e le tue serie preferite</h4>
     </main>
     <main v-else>
-        <h2>Film</h2>
+        <h2>{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
+
+
         <section>
             <AppCard v-for="movie in store.movieList" :info="movie" />
         </section>
-        <h2>Serie tv</h2>
+        <h2 v-show="store.filterApi == ''">Top Serie Tv</h2>
+        <h2 v-show="store.filterApi != ''"> Serie Tv</h2>
         <section>
             <AppCard v-for="tv in store.tvList " :info="tv" />
         </section>
