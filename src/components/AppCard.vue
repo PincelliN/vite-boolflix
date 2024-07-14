@@ -37,13 +37,13 @@ export default {
         getcredi() {
 
             let creditUrl = `https://api.themoviedb.org/3/${this.creditValue}/${this.info.id}/credits?api_key=12c083f747a1bca75436acb77dccc08d`;
-            console.log(creditUrl);
+            /* console.log(creditUrl); */
             axios.
                 get(creditUrl)
                 .then(res => {
 
                     const cast = res.data.cast;
-                    console.log(cast);
+                    /*    console.log(cast); */
                     if (cast != []) {
 
                         if (cast.length > 5) {
@@ -61,7 +61,15 @@ export default {
                     /*  console.log("errore" + err); */
 
                 })
+        },
+        getCastFilm(actor) {
+            this.store.filtercastApi = actor;
+            this.$emit('searchcast');
+            console.log(store.filtercastApi);
+            console.log('Event emitted: searchcast', actor);
         }
+
+
 
     },
 }
@@ -90,7 +98,8 @@ export default {
                 <span>
                     <h6 @click="this.getcredi()" class="text-start ">Cast:</h6>
                     <ul class=" p-3">
-                        <li v-if="this.castshow == true" v-for="cast in this.castList" class="text-start">{{ cast.name
+                        <li v-if="this.castshow == true" v-for="cast in this.castList"
+                            @click="this.getCastFilm(cast.name)" class="text-start">{{ cast.name
                             }}
                         </li>
                         <li v-else="this.castshow== false">No Info Cast</li>

@@ -1,4 +1,5 @@
 <script>
+import axios from "axios";
 import { store } from "../store";
 import AppCard from "./AppCard.vue";
 
@@ -12,21 +13,45 @@ export default {
             store
         }
     },
+    methods: {
+        getActorShow() {
+            console.log('Event received: searchcast', this.store.filtercastApi);
+            let actorUrl = `https://api.themoviedb.org/3/search/person?api_key=12c083f747a1bca75436acb77dccc08d&query=${this.store.filtercastApi}`
+            axios.
+                get(actorUrl)
+                .then(res => {
+
+                    console.log("ATTORI", res.data.
+                        results);
+                    this.store.castList = res.data.
+                        results[0].known_for;
+
+
+                    console.log(this.store.castList);
+                })
+                .catch(err => {
+
+                })
+        }
+    }
 }
 </script>
 <template>
 
     <main>
-        <h2 v-show="store.movieList.length > 0">{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
-
-
-        <section v-show="store.movieList.length > 0">
-            <AppCard v-for="movie in store.movieList" :info="movie" />
+        <h2 v-show="store.castList.length > 0">{{ store.filtercastApi }}</h2>
+        <section v-show="store.castList.length > 0">
+            <AppCard @searchcast="getActorShow" v-for="show in store.castList" :info="show" />
         </section>
-        <h2 v-show="store.tvList.length > 0">{{ store.filterApi == '' ? "Top Serie Tv" : "Serie Tv" }}</h2>
 
+        <h2 v-show="store.movieList.length > 0">{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
+        <section v-show="store.movieList.length > 0">
+            <AppCard @searchcast="getActorShow" v-for="movie in store.movieList" :info="movie" />
+        </section>
+
+        <h2 v-show="store.tvList.length > 0">{{ store.filterApi == '' ? "Top Serie Tv" : "Serie Tv" }}</h2>
         <section v-show="store.tvList.length > 0">
-            <AppCard v-for="tv in store.tvList " :info="tv" />
+            <AppCard @searchcast="getActorShow" v-for="tv in store.tvList " :info="tv" />
         </section>
 
     </main>
