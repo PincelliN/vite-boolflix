@@ -16,23 +16,34 @@ export default {
     }
   },
   methods: {
-    getMovies() {
-      let MovieApi = store.movielistApi + store.filterApi;
-      /*       console.log(MovieApi); */
-      axios.
-        get(MovieApi)
-        .then(res => {
-          /*   console.log(res.data.results); */
-          store.movieList = res.data.results;
-          /*    console.log(store.movieList); */
-        })
-        .catch(err => {
-          /*  console.log(err); */
-        })
+    getGen() {
+      for (let index = 0; index < store.type.length; index++) {
+        const element = store.type[index];
+        let genUrl = "https://api.themoviedb.org/3/genre/" + element + "/list?api_key=12c083f747a1bca75436acb77dccc08d";
+        axios.
+          get(genUrl)
+          .then(res => {
+            console.log("1 res", res.data.genres);
+            if (element == "tv") {
+              store.genreTvieList = res.data.genres;
+              console.log("2 res", store.genreTvieList);
+            } else {
+              store.genreMovieList = res.data.genres;
+              console.log("3 res", store.genreMovieList);
+            }
+
+            /*    console.log(store.movieList); */
+          })
+          .catch(err => {
+            /*  console.log(err); */
+          })
+      }
     },
 
     getVideo() {
-
+      store.castList = [];
+      store.genmovie = "";
+      store.gentv = "";
       for (let index = 0; index < store.type.length; index++) {
         const element = store.type[index];
 
@@ -59,10 +70,23 @@ export default {
           })
       }
 
-    }
+    },
+    genMovieDiscover() {
+      let genMovieUrl = 'https://api.themoviedb.org/3/discover/movie?api_key=12c083f747a1bca75436acb77dccc08d&with_genres=' + store.genmovie;
+      axios.
+        get(genMovieUrl).then(res => store.movieList = res.data.results)
+        .catch(err => { })
+    },
+    getTvDiscover() {
+      let genMovieUrl = 'https://api.themoviedb.org/3/discover/tv?api_key=12c083f747a1bca75436acb77dccc08d&with_genres=' + store.gentv;
+      axios.
+        get(genMovieUrl).then(res => store.tvList = res.data.results)
+        .catch(err => { })
+    },
   },
   created() {
     this.getVideo();
+    this.getGen();
   }
 
 }
@@ -72,7 +96,7 @@ export default {
 <template>
   <div class="container-fluid">
     <Appheader @search="getVideo" />
-    <AppMain />
+    <AppMain @genmovie="genMovieDiscover" @gentv="getTvDiscover" />
   </div>
 
 </template>

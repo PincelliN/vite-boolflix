@@ -39,20 +39,54 @@ export default {
 <template>
 
     <main>
-        <h2 v-show="store.castList.length > 0">{{ store.filtercastApi }}</h2>
-        <section v-show="store.castList.length > 0">
-            <AppCard @searchcast="getActorShow" v-for="show in store.castList" :info="show" />
-        </section>
+        <div class="row">
+            <div class="col-12">
+                <h2 v-show="store.castList.length > 0">{{ store.filtercastApi }}</h2>
+            </div>
+            <div class="col-12">
+                <section v-show="store.castList.length > 0">
+                    <AppCard @searchcast="getActorShow" v-for="show in store.castList" :info="show" />
+                </section>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 d-flex">
+                <h2 v-show="store.movieList.length > 0">{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
+                <select name="movie" v-model="store.genmovie" @change="$emit('genmovie')">
+                    <option name="movie" value=""> Scegli il Genere</option>
+                    <option name="movie" v-for="gen in store.genreMovieList" :value="gen.id">{{ gen.name }}</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <section v-show="store.movieList.length > 0">
+                    <AppCard @searchcast="getActorShow" v-for="movie in store.movieList" :info="movie" />
+                </section>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 d-flex ">
+                <h2 v-show="store.tvList.length > 0">{{ store.filterApi == '' ? "Top Serie Tv" : "Serie Tv" }}</h2>
+                <select name="tv" v-model="store.gentv" @change="$emit('gentv')">
+                    <option name="tv" value=""> Scegli il Genere</option>
+                    <option name="tv" v-for="gentv in store.genreTvieList" :value="gentv.id">{{ gentv.name }}
+                    </option>
+                </select>
+            </div>
+            <div class="col-12">
+                <section v-show="store.tvList.length > 0">
+                    <AppCard @searchcast="getActorShow" v-for="tv in store.tvList " :info="tv" />
+                </section>
+            </div>
+        </div>
 
-        <h2 v-show="store.movieList.length > 0">{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
-        <section v-show="store.movieList.length > 0">
-            <AppCard @searchcast="getActorShow" v-for="movie in store.movieList" :info="movie" />
-        </section>
 
-        <h2 v-show="store.tvList.length > 0">{{ store.filterApi == '' ? "Top Serie Tv" : "Serie Tv" }}</h2>
-        <section v-show="store.tvList.length > 0">
-            <AppCard @searchcast="getActorShow" v-for="tv in store.tvList " :info="tv" />
-        </section>
+
+
+
+
+
+
+
 
     </main>
 </template>
