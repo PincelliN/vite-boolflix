@@ -9,6 +9,9 @@ export default {
     data() {
         return {
             store,
+            creditValue: null,
+            castList: [],
+            castshow: true,
 
         }
     },
@@ -32,8 +35,8 @@ export default {
             return voteStar;
         },
         getcredi() {
-            store.castList = []
-            let creditUrl = `https://api.themoviedb.org/3/${store.creditValue}/${this.info.id}/credits?api_key=12c083f747a1bca75436acb77dccc08d`
+
+            let creditUrl = `https://api.themoviedb.org/3/${this.creditValue}/${this.info.id}/credits?api_key=12c083f747a1bca75436acb77dccc08d`;
             console.log(creditUrl);
             axios.
                 get(creditUrl)
@@ -42,16 +45,21 @@ export default {
                     const cast = res.data.cast;
                     console.log(cast);
                     if (cast != []) {
+
                         if (cast.length > 5) {
-                            store.castList = cast.slice(0, 5);
+                            this.castList = cast.slice(0, 5);
 
                         } else {
-                            store.castList = cast.slice(0, cast.length);
+                            this.castList = cast.slice(0, cast.length);
+                        }
+                        if (this.castList.length == 0) {
+                            this.castshow = false;
                         }
                     }
 
                 }).catch(err => {
                     /*  console.log("errore" + err); */
+
                 })
         }
 
@@ -59,15 +67,16 @@ export default {
 }
 </script>
 <template>
-    <div class="flip-card">
+    <div class="flip-card" @mouseleave=" this.castList = []">
         <div class="flip-card-inner">
             <div class="flip-card-front">
                 <img v-if="(info.poster_path != null)" :src="'https://image.tmdb.org/t/p/w342/' + info.poster_path"
                     alt="Avatar" style="width:100%;height:100%">
                 <img v-else src="../assets/NO-IMAGE-it.jpg" alt="Avatar" style="width:100%;height:100%">
             </div>
-            <div @mouseover="info.title ? store.creditValue = 'movie' : store.creditValue = 'tv'"
-                class="flip-card-back p-2" style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
+            <div @mouseover="info.title ? this.creditValue = 'movie' : this.creditValue = 'tv'"
+                @mouseleave=" this.castshow = true" class="flip-card-back p-2"
+                style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
                 <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
                 <h5 v-show="(info.title != info.original_title || info.name != info.original_name)">Titolo originale:{{
                     info.original_title ? info.original_title : info.original_name }}</h5>
@@ -77,11 +86,16 @@ export default {
                 </span>
                 <br>
                 <span :class="`fi fi-${flagLanguages()}`"></span>
-                <p @click="this.getcredi()">Cast:
-                <ul>
-                    <li v-for="cast in store.castList">{{ cast.name }}</li>
-                </ul>
-                </p>
+                <br>
+                <span>
+                    <h6 @click="this.getcredi()" class="text-start ">Cast:</h6>
+                    <ul class=" p-3">
+                        <li v-if="this.castshow == true" v-for="cast in this.castList" class="text-start">{{ cast.name
+                            }}
+                        </li>
+                        <li v-else="this.castshow== false">No Info Cast</li>
+                    </ul>
+                </span>
 
             </div>
         </div>
@@ -94,9 +108,7 @@ export default {
 <style lang="scss" scoped>
 @use '/src/styles/general.scss';
 
-.fa-solid {
-    color: yellow;
-}
+
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
@@ -145,6 +157,22 @@ export default {
     overflow-y: auto;
     border: 1px solid white;
     overflow-x: hidden;
+
+    .fa-solid {
+        color: yellow;
+    }
+
+    h6 {
+        cursor: pointer;
+
+        &:hover {
+            color: grey;
+        }
+    }
+
+    ul {
+        list-style: none;
+    }
 
     &::-webkit-scrollbar {
         width: 3px;

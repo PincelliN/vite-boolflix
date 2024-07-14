@@ -15,19 +15,17 @@ export default {
 }
 </script>
 <template>
-    <main class="empty" v-if="store.movieList.length == 0">
-        <h4> Inizia a cercare i film e le tue serie preferite</h4>
-    </main>
-    <main v-else>
-        <h2>{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
+
+    <main>
+        <h2 v-show="store.movieList.length > 0">{{ store.filterApi == '' ? "Top Film" : "Film" }}</h2>
 
 
-        <section>
+        <section v-show="store.movieList.length > 0">
             <AppCard v-for="movie in store.movieList" :info="movie" />
         </section>
-        <h2 v-show="store.filterApi == ''">Top Serie Tv</h2>
-        <h2 v-show="store.filterApi != ''"> Serie Tv</h2>
-        <section>
+        <h2 v-show="store.tvList.length > 0">{{ store.filterApi == '' ? "Top Serie Tv" : "Serie Tv" }}</h2>
+
+        <section v-show="store.tvList.length > 0">
             <AppCard v-for="tv in store.tvList " :info="tv" />
         </section>
 
