@@ -18,4 +18,5 @@ export const store = reactive({
   filterApi: "",
   filtercastApi: "",
   displayInfo: null,
+  urlactor: "",
 });

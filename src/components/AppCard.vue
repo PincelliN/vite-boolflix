@@ -43,7 +43,7 @@ export default {
                 .then(res => {
 
                     const cast = res.data.cast;
-                    /*    console.log(cast); */
+                    console.log(" guarda qui", cast);
                     if (cast != []) {
 
                         if (cast.length > 5) {
@@ -85,9 +85,11 @@ export default {
             <div @mouseover="info.title ? this.creditValue = 'movie' : this.creditValue = 'tv'"
                 @mouseleave=" this.castshow = true" class="flip-card-back p-2"
                 style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
-                <h5>Titolo:{{ info.title ? info.title : info.name }}</h5>
-                <h5 v-show="(info.title != info.original_title || info.name != info.original_name)">Titolo originale:{{
-                    info.original_title ? info.original_title : info.original_name }}</h5>
+                <h5><strong class="text-danger">Titolo:</strong> {{ info.title ? info.title : info.name }}</h5>
+                <h5 v-show="(info.title != info.original_title || info.name != info.original_name)"><strong
+                        class="text-danger">Titolo
+                        originale:</strong> {{
+                            info.original_title ? info.original_title : info.original_name }}</h5>
                 <span>
                     <i v-for="n in vote()" class="fa-solid fa-star"></i>
                     <i v-for="n in (5 - vote())" class="fa-regular fa-star"></i>
@@ -96,7 +98,7 @@ export default {
                 <span :class="`fi fi-${flagLanguages()}`"></span>
                 <br>
                 <span>
-                    <h6 @click="this.getcredi()" class="text-start ">Cast:</h6>
+                    <h6 @click="this.getcredi()" class="text-start "><strong class="text-danger">Cast:</strong> </h6>
                     <ul class=" p-3">
                         <li v-if="this.castshow == true" v-for="cast in this.castList"
                             @click="this.getCastFilm(cast.name)" class="text-start">{{ cast.name
@@ -105,6 +107,10 @@ export default {
                         <li v-else="this.castshow== false">No Info Cast</li>
                     </ul>
                 </span>
+                <br>
+                <span><strong class="text-danger text-start">Trama:</strong>{{ info.
+                    overview
+                    }}</span>
 
             </div>
         </div>
@@ -171,16 +177,21 @@ export default {
         color: yellow;
     }
 
-    h6 {
+    strong {
         cursor: pointer;
 
-        &:hover {
-            color: grey;
-        }
     }
 
     ul {
         list-style: none;
+
+        li {
+            cursor: pointer;
+
+            &:hover {
+                background-color: gray;
+            }
+        }
     }
 
     &::-webkit-scrollbar {

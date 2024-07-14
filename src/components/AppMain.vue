@@ -22,12 +22,17 @@ export default {
                 .then(res => {
 
                     console.log("ATTORI", res.data.
-                        results);
+                        results[0].
+                        profile_path);
+                    this.store.urlactor = res.data.
+                        results[0].
+                        profile_path
+                    console.log(this.store.urlactor);
                     this.store.castList = res.data.
                         results[0].known_for;
 
 
-                    console.log(this.store.castList);
+                    console.log(" qui", this.store.castList);
                 })
                 .catch(err => {
 
@@ -40,8 +45,11 @@ export default {
 
     <main>
         <div class="row">
-            <div class="col-12">
-                <h2 v-show="store.castList.length > 0">{{ store.filtercastApi }}</h2>
+            <div class="col-12 px-0">
+                <h2 v-show="store.castList.length > 0"> <img :src='"https://image.tmdb.org/t/p/w342/" + store.urlactor'
+                        :alt="store.filtercastApi" width="60" height="60" class="d-inline-block align-text-center">{{
+                            store.filtercastApi
+                        }}</h2>
             </div>
             <div class="col-12">
                 <section v-show="store.castList.length > 0">

@@ -57,7 +57,7 @@ export default {
         axios.
           get(url)
           .then(res => {
-            /*    console.log(res.data); */
+            console.log(res.data.results);
             if (element == "movie") {
               store.movieList = res.data.results;
             } else {
