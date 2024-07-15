@@ -2,11 +2,14 @@
 import axios from "axios";
 import { store } from "../store";
 import AppCard from "./AppCard.vue";
+import AppCardActor from "./AppCardActor.vue";
+
 
 export default {
     name: "AppMain",
     components: {
         AppCard,
+        AppCardActor
     },
     data() {
         return {
@@ -22,8 +25,8 @@ export default {
                 .then(res => {
 
                     console.log("ATTORI", res.data.
-                        results[0].
-                        profile_path);
+                        results[0]
+                    );
                     this.store.urlactor = res.data.
                         results[0].
                         profile_path
@@ -44,15 +47,13 @@ export default {
 <template>
 
     <main>
-        <div class="row">
+        <div class="row " v-show="store.castList.length > 0">
             <div class="col-12 px-0">
-                <h2 v-show="store.castList.length > 0"> <img :src='"https://image.tmdb.org/t/p/w342/" + store.urlactor'
-                        :alt="store.filtercastApi" width="60" height="60" class="d-inline-block align-text-center">{{
-                            store.filtercastApi
-                        }}</h2>
+                <h2>{{ store.filtercastApi }}</h2>
             </div>
-            <div class="col-12">
-                <section v-show="store.castList.length > 0">
+            <div class="col-12 d-flex mx-5">
+                <section>
+                    <AppCardActor />
                     <AppCard @searchcast="getActorShow" v-for="show in store.castList" :info="show" />
                 </section>
             </div>
@@ -113,12 +114,10 @@ main {
     section {
         width: 80%;
         margin: 0 auto;
-
         display: flex;
         justify-items: center;
         align-content: flex-start;
-
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
 
         &::-webkit-scrollbar {
