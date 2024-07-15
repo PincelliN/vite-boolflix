@@ -16,6 +16,7 @@ export default {
         }
     },
     methods: {
+        /* metodo per modificare qualche valore della lingua dei film/seritv per ottimizare la libreria flag icon */
         flagLanguages() {
             let country = this.info.original_language;
             if (country == "en") {
@@ -30,25 +31,25 @@ export default {
 
             return country
         },
+
+        /* metodo per dimezzare il voto e arrotondarlo per eccesso */
         vote() {
-            const voteStar = Math.ceil(Math.ceil(parseInt(this.info.vote_average)) / 2);
+            const voteStar = Math.ceil((parseInt(this.info.vote_average)) / 2);
             return voteStar;
         },
-        getcredi() {
 
+        getcredi() {
+            /* metodo per ottenere il cast di ogni card attraverso l'id */
             let creditUrl = `https://api.themoviedb.org/3/${this.creditValue}/${this.info.id}/credits?api_key=12c083f747a1bca75436acb77dccc08d`;
             /* console.log(creditUrl); */
             axios.
                 get(creditUrl)
                 .then(res => {
-
                     const cast = res.data.cast;
-                    console.log(" guarda qui", cast);
+                    /*   console.log(" guarda qui", cast); */
                     if (cast != []) {
-
                         if (cast.length > 5) {
                             this.castList = cast.slice(0, 5);
-
                         } else {
                             this.castList = cast.slice(0, cast.length);
                         }
@@ -56,17 +57,17 @@ export default {
                             this.castshow = false;
                         }
                     }
-
                 }).catch(err => {
                     /*  console.log("errore" + err); */
 
                 })
         },
+        /* metodo per associare l'assegnazione di un valore al emit legato al click */
         getCastFilm(actor) {
             this.store.filtercastApi = actor;
             this.$emit('searchcast');
-            console.log(store.filtercastApi);
-            console.log('Event emitted: searchcast', actor);
+            /*   console.log(store.filtercastApi);
+              console.log('Event emitted: searchcast', actor); */
         }
 
 
@@ -75,31 +76,41 @@ export default {
 }
 </script>
 <template>
+    <!-- quando il mouse esce dalla carda pulisco la lista del cast -->
     <div class="flip-card" @mouseleave=" this.castList = []">
         <div class="flip-card-inner">
             <div class="flip-card-front">
+                <!-- condizione nel caso il poster non fosse disponibile -->
                 <img v-if="(info.poster_path != null)" :src="'https://image.tmdb.org/t/p/w342/' + info.poster_path"
                     alt="Avatar" style="width:100%;height:100%">
                 <img v-else src="../assets/NO-IMAGE-it.jpg" alt="Avatar" style="width:100%;height:100%">
             </div>
+            <!--1- condizione per assegnare il valore al creditValue che utiliziamo per fare la ricerca legate al cast delle serie e dei film-->
             <div @mouseover="info.title ? this.creditValue = 'movie' : this.creditValue = 'tv'"
                 @mouseleave=" this.castshow = true" class="flip-card-back p-2"
                 style="overflow-y: auto;border: 1px solid white;overflow-x:hidden ;">
                 <h5><strong class="text-danger">Titolo:</strong> {{ info.title ? info.title : info.name }}</h5>
-                <h5 v-show="(info.title != info.original_title || info.name != info.original_name)"><strong
-                        class="text-danger">Titolo
-                        originale:</strong> {{
-                            info.original_title ? info.original_title : info.original_name }}</h5>
+                <!-- condizione per visualizzare il titolo originale solo se è diverso dal titolo -->
+                <h5 v-show="(info.title != info.original_title || info.name != info.original_name)">
+                    <strong class="text-danger">Titolo originale:</strong> {{ info.original_title ? info.original_title
+                        :
+                        info.original_name }}
+                </h5>
+                <!-- ciclo v-for utilizzato con un numero per visualizzare le stelline in modo colorato relativamente al voto ottenuto -->
                 <span>
                     <i v-for="n in vote()" class="fa-solid fa-star"></i>
                     <i v-for="n in (5 - vote())" class="fa-regular fa-star"></i>
                 </span>
                 <br>
+                <!-- utilizzo della libreria flag-icon -->
                 <span :class="`fi fi-${flagLanguages()}`"></span>
                 <br>
                 <span>
+                    <!-- al click utilizzo il metodo per ottenere il cast -->
                     <h6 @click="this.getcredi()" class="text-start "><strong class="text-danger">Cast:</strong> </h6>
                     <ul class=" p-3">
+                        <!-- emit attraverso il metodo getcastFilm -->
+                        <!-- condizzione per visualizzare la lista del cast oppure il messaggio no info cast  -->
                         <li v-if="this.castshow == true" v-for="cast in this.castList"
                             @click="this.getCastFilm(cast.name)" class="text-start">{{ cast.name
                             }}
@@ -108,7 +119,7 @@ export default {
                     </ul>
                 </span>
                 <br>
-                <span><strong class="text-danger text-start">Trama:</strong>{{ info.
+                <span v-show="info.overview != ''"><strong class="text-danger text-start">Trama:</strong>{{ info.
                     overview
                     }}</span>
 
@@ -121,11 +132,11 @@ export default {
 
 
 <style lang="scss" scoped>
-@use '/src/styles/general.scss';
+@use '../styles/general.scss';
 
 
 
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+/* caratteristiche generali del contenitore Card */
 .flip-card {
     margin: 10px;
     background-color: transparent;
@@ -134,7 +145,7 @@ export default {
     perspective: 1000px;
 }
 
-/* This container is needed to position the front and back side */
+/* contenitore necessario per posizionare il lato anteriore e quello posteriore */
 .flip-card-inner {
     position: relative;
     width: 100%;
@@ -144,12 +155,11 @@ export default {
     transform-style: preserve-3d;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
+/*rotazione orizzontale del animazione */
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-/* Position the front and back side */
 .flip-card-front,
 .flip-card-back {
     position: absolute;
@@ -158,13 +168,7 @@ export default {
     backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
-.flip-card-front {
-    background-color: #bbb;
-    color: black;
-}
-
-/* Style the back side */
+/* stile retro card */
 .flip-card-back {
     background-color: black;
     color: white;
